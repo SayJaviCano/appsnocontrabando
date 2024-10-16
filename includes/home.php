@@ -171,6 +171,14 @@ if ($rs != "") {
 
 
 
+<?php 
+/**
+ * App no contrabando - dont show denuncia banner
+ * Could really remove this block, this way we can update with copy/paste between 2 sites
+**/
+
+if (!APP_ACCESS):
+?>
 <!-- Banner Section -->
 <section class="container">
   <div class="row">
@@ -198,7 +206,7 @@ if ($rs != "") {
       ?>
         <a href="<?php echo $enlace; ?>" title="<?php echo $texto; ?>"
           target="<?php echo $target; ?>">
-          <img src="<?php echo $dominio . "images/banner/$archivo"; ?>"
+          <img src="<?php echo $dominio_web . "images/banner/$archivo"; ?>"
             class="img-fluid" alt="<?php echo $texto; ?>">
         </a>
       <?php } ?>
@@ -207,7 +215,7 @@ if ($rs != "") {
   </div>
 </section>
 <!-- Fin Banner Section -->
-
+<?php endif; ?>
 
 
 
@@ -276,14 +284,6 @@ if ($rs != "") {
 
 
 
-<?php 
-/**
- * App no contrabando - dont show denuncia banner
- * Could really remove this block, this way we can update with copy/paste between 2 sites
-**/
-
-if (!APP_ACCESS):
-?>
 <!-- Denuncia iFrame Section -->
 <section class="container">
   <div class="row">
@@ -293,9 +293,6 @@ if (!APP_ACCESS):
   </div>
 </section>
 <!-- Fin Denuncia iFrame Section -->
-
-<?php endif; ?>
-
 
 
 <?php 

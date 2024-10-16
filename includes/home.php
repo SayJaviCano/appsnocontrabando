@@ -276,7 +276,14 @@ if ($rs != "") {
 
 
 
+<?php 
+/**
+ * App no contrabando - dont show denuncia banner
+ * Could really remove this block, this way we can update with copy/paste between 2 sites
+**/
 
+if (!APP_ACCESS):
+?>
 <!-- Denuncia iFrame Section -->
 <section class="container">
   <div class="row">
@@ -287,6 +294,7 @@ if ($rs != "") {
 </section>
 <!-- Fin Denuncia iFrame Section -->
 
+<?php endif; ?>
 
 
 

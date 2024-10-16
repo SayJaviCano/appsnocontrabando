@@ -1,79 +1,119 @@
-<?php include("header.php");?>
+<?php 
+
+/**
+ * News entry - linked from home and categoria pages
+ * uses meta.php
+ * called from index.php
+ */
+
+
+include("header.php");?>
+
 <div class="container">
-	<div class="row justify-content-center">	
-		<div class="col-md-10">	
-			<h1 class="text-center tit1"><?php echo $titulo; ?></h1>
-		</div>
-	</div>	
+<!-- social share and bredcrumbs -->
+<div class="breadcrumb-holder row justify-content-center">
 
-	<?php if ($entradilla!="") { ?>
-	<div class="row mb-3">	
-		<div class="col-md-9 mx-auto">
-			<div class="entradilla"><?php echo $entradilla;?></div>
-		</div>
-	</div>
-	<?php } ?>
+  <div class="col-md-12 breadcrumbs">	
+    <span><a href="<?php echo $dominio;?>">Home</a></span>
+    <span class="separador"><i class="fa-solid fa-angle-right themed"></i></span>
+
+    <?php if (@$congreso_post) { ?>
+
+      <span><a href="<?php echo $dominio;?>category/forum/">Forum</a></span>
+
+    <?php } else { ?>
+
+      <span>Sections</span>
+      <span class="separador"><i class="fa-solid fa-angle-right themed"></i></span>
+      <span><a href="<?php echo $dominio . "/category/" . $categorias_reference[ $id_categoria]["slug"] ;?>">
+
+      <?php echo $categorias_reference[ $id_categoria]["nombre"] ?></a></span>
+
+    <?php } ?>
+    
+    <span class="separador"><i class="fa-solid fa-angle-right themed"></i></span>
+    <span><?php echo $titulo; ?></span>
+  </div>
+
+
+  <div class="col-md-10">
+
+    <div class="social-share">
+
+      <div>Compartir </div>
+  
+      <div>
+      
+        <a href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($pagina_nocontrabando)?>&title=<?php echo urlencode($meta_title)?>" title="Facebook" class=" share"><i class="themed fa-brands fa-facebook"></i></a>
+        
+        <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode($pagina_nocontrabando)?>&text=<?php echo urlencode($meta_title)?>" title="Twitter" class=" share"><i class="themed fa-brands fa-x-twitter"></i></a>
+        
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode($pagina_nocontrabando)?>&title=<?php echo urlencode($meta_title)?>" title="Linkedin" class=" share"><i class="themed fa-brands fa-linkedin"></i></a>
+        
+        <a href="mailto:?subject=<?php echo($meta_title);?>&body=<?php echo "Leia o conteúdo completo no link a seguir " . "%0D%0A%0D%0A" . urlencode($pagina_nocontrabando) . "%0D%0A%0D%0A"?>" title="eMail" class="envelope"><i class="themed fa fa-envelope"></i></a>
+        
+        <a href="whatsapp://send?text=<?php echo urlencode($meta_title)?> <?php echo urlencode($pagina_nocontrabando)?>&utm_source=whatsapp" title="Whatsapp" class=" share"><i class="themed fa-brands fa-whatsapp"></i></a>				
+      </div>		
+    </div>
+    
+  </div>
+
+  <div class="col-md-2 text-right">
+    <a href="#" onclick="history.back()" title="Volver a la página principal" class="arrow-link-back">Volver</a>
+  </div>
+
+</div>	
+<!-- end social share and bredcrumbs -->
+
+
+<div class="top-underlined"></div>
+
+
+  <div class="row post-detalle">	
+
+    <div class="col-12 mb-3">
+      <header>
+        <p class="fecha"><?php echo cambiaf_a_normal($fecha);?></p>
+        <h1 class="text-left"><?php echo $titulo; ?></h1>
+        <?php echo $entradilla; ?>
+      </header>
+    </div>
+
+  </div>
 		
-	<div class="row">	
-		<div class="col-md-11 mx-auto">
-			<p class="text-center cat">
-				<?php
-				$sql2 = "SELECT categorias.id, categorias.nombre, categorias.slug FROM categorias";		
-				$sql2.= " INNER JOIN contenidos_categorias ON contenidos_categorias.id_categoria = categorias.id";		
-				$sql2.= " WHERE contenidos_categorias.id_contenido='$id_noticia'";
-				$sql2.= " ORDER BY categorias.orden";
-				$rs2 = $mysqli->query($sql2); 
-				if ($rs2->num_rows > 0) {
-					while ($fila2 = $rs2->fetch_array(MYSQLI_ASSOC)){
-						$categoria_name = $fila2["nombre"];
-						$categoria_slug = $fila2["slug"];
-						?><a href="<?php echo $dominio . "category/$categoria_slug/";?>"><?php echo $categoria_name;?></a> | <?php
-					}
-				}
-				?>
-				<?php echo cambiaf_a_normal($fecha);?>
-			</p>	
-			<p class="text-center autor">NO Contrabando - Altadis</p>
-		</div>
-	</div>
+	<div class="row mb-3">	
 
-	<?php if ($imagen!="") { ?>
-	<div class="row mt-3 mb-3">	
-		<div class="col-sm-7 col-md-7 mx-auto text-center">							
-			<?php echo $imagen;?>
-			<?php if ($imagen_pie!="") { ?><p class="clearfix text-center"><?php echo $imagen_pie;?></p><?php } ?>
+    <div class="col-md-8 mt-3 pr-3">
+      
+      <?php echo $texto; ?>
+
+      <?php if ($imagen_pie!="") { ?>
+        <!--<p class="clearfix text-left"><?php echo $imagen_pie;?></p>-->
+      <?php } ?>
+
+    </div>
+
+		<div class="col-md-4 mt-3">							
+			<?php if ($imagen!="") {
+         echo $imagen;
+      }
+      ?> 
+
+    <?php if ($livechat_vimeo==1) { ?>
+      <div class="col-12">	
+        <div class="w-100 h-100 d-inline-block">
+          <iframe class="livechat_container" frameborder="0" scrolling="no" src="https://vimeo.com/live-chat/<?php echo $codigo_video; ?>/"></iframe>
+        </div>
+      </div>
+    <?php } ?>	
+
 		</div>
 
-		<?php
-			if ($livechat_vimeo==1) {
-				?>
-				<div class="col-sm-4 col-md-4">	
-					<div class="w-100 h-100 d-inline-block">
-						<iframe class="livechat_container" frameborder="0" scrolling="no" src="https://vimeo.com/live-chat/<?php echo $codigo_video; ?>/"></iframe>
-					</div>
-				</div>
-				<?php
-			}
-		?>		
-	</div>				
-	<?php } ?>
+			
+	</div>			
 
 
-	<div class="row mb-5">	
-		<div class="col-md-8 mx-auto">	
-			<div class="texto mb-5"><?php echo $texto;?></div>
-			<?php if ($_SERVER['SERVER_NAME'] == "nocontrabando.altadis.com") {  ?>				
-				<div class="socialfollow text-center">
-					<div class="sharetx">Compartir</div>
-					<a href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($pagina_nocontrabando)?>&title=<?php echo urlencode($meta_title)?>" title="Facebook" class="facebook share"><i class="fa fa-facebook"></i></a>
-					<a href="https://twitter.com/intent/tweet?url=<?php echo urlencode($pagina_nocontrabando)?>&text=<?php echo urlencode($meta_title)?>" title="Twitter" class="twitter share"><i class="fa fa-twitter-x"></i></a>
-					<a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode($pagina_nocontrabando)?>&title=<?php echo urlencode($meta_title)?>" title="Linkedin" class="linkedin share"><i class="fa fa-linkedin"></i></a>
-					<a href="mailto:?subject=<?php echo($meta_title);?>&body=<?php echo "Leer noticia completa en el siguiente enlace " . "%0D%0A%0D%0A" . urlencode($pagina_nocontrabando) . "%0D%0A%0D%0A"?>" title="eMail" class="envelope"><i class="fa fa-envelope"></i></a>
-					<a href="whatsapp://send?text=<?php echo urlencode($meta_title)?> <?php echo urlencode($pagina_nocontrabando)?>?utm_source=whatsapp" title="Whatsapp" class="whatsapp d-sm-none"><i class="fa fa-whatsapp"></i></a>				
-				</div>			
-			<?php } ?>			
-		</div>
-	</div>	
+	
 
 
 <?php
@@ -110,12 +150,13 @@ if ($tags!="") {
     if ($rs!="") {
         $num_total_registros = $rs->num_rows;
         if ($num_total_registros>0) {
-            echo '<hr class="clearfix">';
-            echo '<div class="row">';
-            echo '	<div class="col-md-12 text-center"><h2 class="titular_listado">Noticias relacionadas</h2></div>';
-            echo '</div>';
-
-            echo '<div class="row mb-5">';
+            echo '<hr class="clearfix">
+                  <div class="row">
+                    <div class="col-md-12>
+                      <h3 class="titular_listado">Contenúdo Relacionado</h3>
+                    </div>
+                  </div>
+                  <div class="row mb-5">';
 
             while ($fila = $rs->fetch_array(MYSQLI_ASSOC)) {
                 $id = $fila['id'];
@@ -152,8 +193,10 @@ if ($tags!="") {
 					}
 				}	
 
-                $slug = $fila["post_name"];
-                $tags = $fila["tags"]; ?>
+        $slug = $fila["post_name"];
+        $tags = $fila["tags"]; 
+        ?>
+
 				<div class="col-md-4 noticias_n3">	
 					<a href="<?php echo "$dominio" . $slug . "/"; ?>" title="<?php echo $titulo; ?>">
 						<div class="caja n3">

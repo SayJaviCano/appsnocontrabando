@@ -1,5 +1,18 @@
 <?php include("header.php");?>
-<div class="container">
+
+	<?php if ($titulo!="") {		?>
+
+    <div class="bg-cabecera">
+      <div class="container">
+        <div class="col-md-12 content-cab">
+          <h1><?php echo $titulo; ?></h1>
+        </div>
+      </div>
+    </div>
+		
+	<?php } ?>
+
+  <div class="container">
 
 <?php if ($page_name=="buzon-de-denuncias" || $page_name=="conoce-putos-de-venta-legal") {  ?>
 	<div class="row">	
@@ -12,25 +25,19 @@
 	</div>
 <?php } ?>
 
-	<?php if ($titulo!="") {		?>
-		<div class="row justify-content-center">
-			<div class="col-md-10">	
-				<h1 class="text-center tit1"><?php echo $titulo; ?></h1>
-			</div>
-		</div>	
-	<?php } ?>
 
 	<?php if ($entradilla!="") { ?>
 	<div class="row mb-3">	
-		<div class="col-md-10 mx-auto">
+		<div class="col-md-12 mx-auto">
 			<div class="text-center entradilla"><?php echo $entradilla;?></div>
 		</div>
 	</div>
 	<?php } ?>
 		
 <?php
-	$col = "col-md-8";
-	if ($page_name=="archivo") { $col = "col-md-9"; }
+	$col = "col-md-12";
+
+	if ($page_name=="archivo") { $col = "col-md-12"; }
 
 ?>
 

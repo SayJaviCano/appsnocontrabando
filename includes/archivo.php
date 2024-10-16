@@ -43,9 +43,12 @@
 	$sql_busqueda = "";
 	$contador = 1;
 	$cuantos =  count($arary_busqueda);
+
 	foreach ($arary_busqueda as $palabra) {
+
 		$cadena_de_busqueda .= "+" . $palabra . " "; // . "* ";
-		$sql_busqueda .= " (contenidos.titulo like('%" . $palabra . "%') OR contenidos.entradilla like('%" . $palabra . "%')) ";
+		
+    $sql_busqueda .= " (c.titulo like('%" . $palabra . "%') OR c.entradilla like('%" . $palabra . "%')) ";
 
 		if ($contador < $cuantos) { $sql_busqueda .= " AND "; }
 		$contador++;
@@ -58,9 +61,6 @@
 	<div class="row mt-3 mb-3">
 		<div class="input-group col">						
 			<input class="form-control form-control-lg my-0" type="text" placeholder="Buscar" aria-label="Search" name="input_search" id="input_search" value="<?php echo $input_search; ?>">
-			<div class="input-group-append">
-				<a class="btn btn-primary" name="btn_search" id="btn_search"><i class="bi bi-search"></i></a>
-			</div>
 		</div>
 	</div>
 
@@ -70,7 +70,11 @@
 			<select name="anio" id="anio" class="form-control filtro">
 			<option value="0" <?php if ($anio_select==0) { echo "selected"; }?>>Todos</option>
 			<?php
-				$sql = "SELECT DISTINCT YEAR(fecha) as aa FROM contenidos WHERE tipo='post' ORDER BY fecha DESC"; 
+				$sql = "SELECT DISTINCT YEAR(fecha) AS aa 
+                FROM contenidos 
+                WHERE tipo='post' 
+                ORDER BY aa DESC"; 
+
 				$rs = $mysqli->query($sql); 
 				while ($fila = $rs->fetch_array(MYSQLI_ASSOC)){
 					$aa = $fila['aa'];
@@ -92,7 +96,7 @@
 				?>			
 			</select>		
 		</div>
-		<div class="form-group col-md-4">
+		<div class="form-group col-6 col-md-4">
 			<label for="seccion">Sección</label>	
 			<select name="seccion" id="seccion" class="form-control filtro">
 				<option value="0" <?php if ($seccion_select==0) { echo "selected"; }?>>Todas</option>
@@ -109,14 +113,22 @@
 				?>			
 			</select>			
 		</div>
-	</div>
+
+    <div class="form-group col-12">
+				<a class="btn btn-primary" name="btn_search" id="btn_search"><i class="bi bi-search"></i>Buscar</a>
+    </div>
+
+  </div>
 </form>	
 <?php
 
 if ($input_search!="" || $anio_select!=0 || $mes_select!=0 || $seccion_select!=0) {
-    $sql = "SELECT contenidos.id, contenidos.post_name, contenidos.fecha, contenidos.titulo, contenidos.entradilla, contenidos.texto, contenidos.imagen, contenidos.imagen_pie, contenidos.video, contenidos.tags, contenidos_categorias.id_categoria FROM contenidos";
-    $sql.= " INNER JOIN contenidos_categorias ON contenidos_categorias.id_contenido = contenidos.id";
-    $sql.= " WHERE contenidos.activo=1 AND contenidos.tipo='post'";
+    $sql = "SELECT c.id, c.post_name, c.fecha, c.titulo, c.entradilla, 
+                   c.texto, c.imagen, c.imagen_pie, c.video, c.tags, 
+                   MIN(cat.id_categoria) AS id_categoria 
+            FROM contenidos c
+            INNER JOIN contenidos_categorias cat ON cat.id_contenido = c.id
+            WHERE c.activo=1 AND c.tipo='post'";
    
     if ($input_search!="") {
         $sql.= " AND ( ";
@@ -124,17 +136,17 @@ if ($input_search!="" || $anio_select!=0 || $mes_select!=0 || $seccion_select!=0
         $sql.= " ) ";
     }
     if ($anio_select!=0) {
-		$sql.= " AND YEAR(contenidos.fecha)=$anio_select";
+		$sql.= " AND YEAR(c.fecha)=$anio_select";
     }
     if ($mes_select!=0) {
-        $sql.= " AND MONTH(contenidos.fecha)=$mes_select";
+        $sql.= " AND MONTH(c.fecha)=$mes_select";
     }
     if ($seccion_select!=0) {
-        $sql.= " AND contenidos_categorias.id_categoria=$seccion_select";
+        $sql.= " AND cat.id_categoria=$seccion_select";
     }
 
-    $sql.= " GROUP BY contenidos.id";
-    $sql.= " ORDER BY contenidos.fecha DESC, contenidos.id DESC";
+    $sql.= " GROUP BY c.id";
+    $sql.= " ORDER BY c.fecha DESC, c.id DESC";
 
     //echo "$sql<br>";
 

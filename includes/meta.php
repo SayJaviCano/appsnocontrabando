@@ -142,15 +142,34 @@ elseif ($i == 0)	{
 		if (isset($_SESSION['sess_admin_login'])) {
 			
 			if ($_SESSION['sess_admin_login'] == "true" || $debug=="1") {
-				$sql="SELECT * FROM contenidos WHERE post_name='$page_name'";
+				
+        $sql="SELECT c.*, MIN(cat.id_categoria) AS id_categoria
+            FROM contenidos c
+            LEFT JOIN contenidos_categorias cat ON cat.id_contenido = c.id
+            WHERE c.activo <= 1 
+            AND c.post_name='$page_name'
+            GROUP BY c.id";
+
 			} else {
-				$sql="SELECT * FROM contenidos WHERE activo=1 AND post_name='$page_name'";
+				
+        $sql="SELECT c.*, MIN(cat.id_categoria) AS id_categoria
+            FROM contenidos c
+            LEFT JOIN contenidos_categorias cat ON cat.id_contenido = c.id
+            WHERE c.activo = 1 
+            AND c.post_name='$page_name'
+            GROUP BY c.id";
+
 			}
 
 		} else {
 
 			// 2023-03: Cargar post - incluso cuando esté inactivo:
-			$sql="SELECT * FROM contenidos WHERE activo <= 1 AND post_name='$page_name'";
+			$sql="SELECT c.*, MIN(cat.id_categoria) AS id_categoria
+            FROM contenidos c
+            LEFT JOIN contenidos_categorias cat ON cat.id_contenido = c.id
+            WHERE c.activo = 1 
+            AND c.post_name='$page_name'
+            GROUP BY c.id";
 
 		}
 
@@ -167,6 +186,7 @@ elseif ($i == 0)	{
 			}
 			
 			$id_noticia = $fila['id'];		
+      $id_categoria = (int)$fila['id_categoria'];		
 			$fecha = ($fila['fecha']);			
 			$titulo = $fila['titulo'];	
 			$entradilla = $fila['entradilla'];	
@@ -184,7 +204,9 @@ elseif ($i == 0)	{
 				$meta_image =  $dominio . $imagen;
 				$imagen = '<img src="' . $dominio . $imagen .'" class="img-fluid">';
 				$destacado_img = $fila['destacado_img'];
-				if ($destacado_img=="1") { $imagen = ""; }
+				
+        if ($destacado_img=="1" && "why"=="who knows") { $imagen = ""; }
+        
 			}
 			if ($video!="")		{  
 				$video_aux = $video;
@@ -210,7 +232,7 @@ elseif ($i == 0)	{
 				$page_name = "post";
 				$archivo_include = "post_detalle.php";
 			} else {
-				$archivo_include = "pagina_detalle.php";			
+				$archivo_include = "pagina_detalle.php";
 			}
 			
 		} 
@@ -362,20 +384,37 @@ $meta_description = rip_tags($meta_description);
 	
     <!-- Favicons -->
 	<link rel="icon" href="<?php echo $dominio;?>favicon.ico">
-	<meta name="theme-color" content="#771425">
+	<meta name="theme-color" content="#f07300">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" href="<?php echo $dominio . $apple_touch_icon;?>?<?php echo time();?>"/>
 
 	<link rel="manifest" href="<?php echo $dominio; ?>manifest.json" crossorigin="use-credentials">
 
-	<link href="<?php echo $dominio;?>css/custom.css?<?php echo time();?>" rel="stylesheet" type="text/css">
-	<script>dominio = "<?php echo $dominio;?>"; </script>
-	<script async src="<?php echo $dominio;?>js/analytics.js?<?php echo time();?>"></script>
+ <!-- our project just needs Font Awesome Solid + Brands -->
+<link href="<?php echo $dominio;?>/css/fa/fontawesome.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/fa/brands.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/fa/solid.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/bs/css/bootstrap.min.css" rel="stylesheet" />
 
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-	<script src="<?php echo $dominio;?>/js/jquery.scrollto.min.js"></script>
-	<?php
+<link href="<?php echo $dominio;?>css/custom.css?v=20240926" rel="stylesheet" type="text/css">
+
+<script>dominio = "<?php echo $dominio;?>"; </script>
+<script async src="<?php echo $dominio;?>js/analytics.js?<?php echo time();?>"></script>
+
+<script src="<?php echo $dominio;?>js/jquery-3.6.0.min.js"></script>	
+<script src="<?php echo $dominio;?>js/jquery.easing.1.3.js"></script>	
+<script src="<?php echo $dominio;?>js/jquery.cookie.js"></script>		
+<script src="<?php echo $dominio;?>js/jquery.scrollto.min.js"></script>
+<script src="<?php echo $dominio;?>js/wow.min.js"></script>
+
+<script src="<?php echo $dominio;?>css/bs/js/bootstrap.min.js"></script>
+<script src="<?php echo $dominio;?>js/jquery.fancybox.min.js"></script>	
+
+<script src="<?php echo $dominio;?>js/comun.js?<?php echo time();?>"></script>
+  
+  
+  <?php
 	$cookie_statistics = "";
 	if(isset($_COOKIE['cookiepolicy-statistics'])) {	$cookie_statistics = $_COOKIE['cookiepolicy-statistics']; }
 
@@ -404,7 +443,7 @@ $meta_description = rip_tags($meta_description);
 			gtag('config', 'G-M0GYG7E9YN');
 			</script> -->
 
-			<!-- Google tag (gtag.js) -->
+			<!-- Google tag (gtag.js) 
 			<script async src="https://www.googletagmanager.com/gtag/js?id=G-6KV9WVDR61"></script>
 			<script>
 			window.dataLayer = window.dataLayer || [];
@@ -412,7 +451,19 @@ $meta_description = rip_tags($meta_description);
 			gtag('js', new Date());
 
 			gtag('config', 'G-6KV9WVDR61');
+			</script> -->
+
+
+			<!-- Google tag (gtag.js) -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=G-4TPEBE5WLS"></script>
+			<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-4TPEBE5WLS');
 			</script>
+
 
 			<?php
         }
@@ -428,12 +479,7 @@ $meta_description = rip_tags($meta_description);
 	<script src="<?php echo $dominio;?>/js/firebase-init.js?<?php echo time();?>"></script>
 */
 ?>
-	<script src="<?php echo $dominio;?>js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>	
-	<script src="<?php echo $dominio;?>js/jquery.cookie.js"></script>	
-	<script src="<?php echo $dominio;?>js/jquery.easing.1.3.js"></script>	
-	<script src="<?php echo $dominio;?>js/jquery.fancybox.min.js"></script>	
-
-	<script src="<?php echo $dominio;?>js/comun.js?<?php echo time();?>"></script>
+	
 
 <?php
 $pop_banner = LimpiaParametros((isset($_GET['pop']) ? $_GET['pop'] :""));
@@ -462,47 +508,34 @@ if ($pop_banner=="appNoContrabando") {
 			$url_app = "https://apps.apple.com/gb/app/no-contrabando/id1568160667";
 		}
 
-
-		/*
-		$ip = $_SERVER['REMOTE_ADDR'];
-		if ($ip=="88.0.62.157")
-		{
-			echo "<pre>";
-
-			echo "<br>dispositivo: $dispositivo<br>"; 	
-			echo "<br>plataforma: $plataforma<br>"; 
-
-			echo "<br>url_app: $url_app<br>"; 
-			echo "</pre><br><br>";
-		}
-		*/
-
-		//header("Location: $url_app"); 
-		?><script>window.location.href = "<?php echo $url_app; ?>"</script><?php
+		?>
+    <script>window.location.href = "<?php echo $url_app; ?>"</script>
+  
+  <?php
 		die();	
 	}
 
-?>	
-<div id="bannerModal" class="animated-modal text-center p-0" style="display:none">
-	<div class="container">
-		<div class="row">		
-			<img src="<?= $dominio;?>images/descargate-app.gif" class="img-responsive" alt="Descárgate la App NO CONTRABANDO">
-		</div>
-	</div>
-</div>
-<script>
-$(document).ready(function () { 
-	$.fancybox.open({
-		src  : '#bannerModal',
-		opts : {
-			afterShow : function( instance, current ) {
-				//setTimeout(function(){ $.fancybox.close(); }, 4000);								
-			}
-		}
-	});	
+?>
 
-});	
-</script>
+<div id="bannerModal" class="animated-modal text-center p-5" style="display:none">
+<div class="close">
+  <a href="javascript:void(0)" onclick="document.getElementById('bannerModal').style.display='none';"><i class="fas fa-times"></i></a>
+</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <img src="<?= $dominio;?>images/descargate-app.gif" class="img-responsive" alt="Descárgate la App NO CONTRABANDO">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    document.getElementById("bannerModal").style.display = "block";
+  });
+  </script>
+
 <?php } ?>
 
 </body>

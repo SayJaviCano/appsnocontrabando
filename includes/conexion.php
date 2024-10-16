@@ -309,12 +309,7 @@ function SendEmail($from, $fromname, $to, $toname, $subject, $html, $plain, $tob
 	$mail->CharSet = 'UTF-8';
 	$mail->SMTPAuth = true;
 	$mail->SMTPAutoTLS = false;
-	
-	//Enable SMTP debugging
-	// SMTP::DEBUG_OFF = off (for production use)
-	// SMTP::DEBUG_CLIENT = client messages
-	// SMTP::DEBUG_SERVER = client and server messages
-	$mail->SMTPDebug = SMTP::DEBUG_OFF;
+	$mail->SMTPDebug = (DEBUG ? 2 : 0);
 
 	$mail->Host     = $mail_host;
 	$mail->Username = $mail_username;

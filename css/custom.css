@@ -433,12 +433,12 @@ footer {
 @media screen and (max-width: 767.98px) {
   .footer-1 {
     padding: 10px;
-
-    & .bg-brown {
-      padding-bottom: 80px;
-    }
-
   }
+
+  footer .bg-brown {
+    padding-bottom: 80px;
+  }
+
 }
 
 .footer-1 p {

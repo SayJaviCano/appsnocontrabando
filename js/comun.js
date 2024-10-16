@@ -32,12 +32,14 @@ $(document).ready(function() {
 				$.cookie(k, v, {expires: 365, path: '/'});
 				p.css('bottom', -1 * h).addClass('cp-hidden');
 			}).animate({bottom: 0}, 1200, "easeOutBounce");
-		}
+		} else {
+      console.log(" Cookie policy not found on page. ");
+    }
 
 	  }
 	  catch(err) {
-		
-	  }
+      console.log(" Cookie policy not found on page (deliberate) ");
+	  } 
 
 	function toggleIcon(e) {
 		$(e.target)
@@ -70,57 +72,62 @@ $(document).ready(function() {
 	})
 
 
-	
+	/* Code will not fire, code should not be present on mobile version */
+  try {
+    $('.pop_config_cookies').on('click', function (e) {
+      e.preventDefault();		
+      $('.config-box').animate({
+        opacity: 1
+      }, 1, function(){
+        $('#cookie-config').show();
+      });
+    })
 
-	
-	
-	$('.pop_config_cookies').on('click', function (e) {
-		e.preventDefault();		
-		$('.config-box').animate({
-			opacity: 1
-		}, 1, function(){
-			$('#cookie-config').show();
-		});
-	})
+    $('.cp-acept').on('click', function (e) {
+      e.preventDefault();
+      h = $('#cookie-policy').height();
+      $('#cookie-policy').animate({bottom: -1 * h}, 300, 'easeInOutCirc');
 
-	$('.cp-acept').on('click', function (e) {
-		e.preventDefault();
-		h = $('#cookie-policy').height();
-		$('#cookie-policy').animate({bottom: -1 * h}, 300, 'easeInOutCirc');
+      $("#cookie_statistics").prop("checked", true);  
 
-		$("#cookie_statistics").prop("checked", true);  
+      $.cookie('cookiepolicy-statistics', 'true', {expires: 365, path: '/'});
+      $.cookie('cookiepolicy-agreed', 'true', {expires: 365, path: '/'});
 
-		$.cookie('cookiepolicy-statistics', 'true', {expires: 365, path: '/'});
-		$.cookie('cookiepolicy-agreed', 'true', {expires: 365, path: '/'});
+      $('.config-box').animate({
+        opacity: 0
+      }, 300, function(){
+        $('#cookie-config').hide();
+      });
+    })
 
-		$('.config-box').animate({
-			opacity: 0
-		}, 300, function(){
-			$('#cookie-config').hide();
-		});
-	})
+    $('.cp-guardar').on('click', function (e) {
+      e.preventDefault();
+      h = $('#cookie-policy').height();
+      valor_statistics = $('#cookie_statistics').prop('checked');
+      $('#cookie-policy').animate({bottom: -1 * h}, 300, 'easeInOutCirc');
+      $.cookie('cookiepolicy-statistics', valor_statistics, {expires: 365, path: '/'});
+      $.cookie('cookiepolicy-agreed', 'true', {expires: 365, path: '/'});
 
-	$('.cp-guardar').on('click', function (e) {
-		e.preventDefault();
-		h = $('#cookie-policy').height();
-		valor_statistics = $('#cookie_statistics').prop('checked');
-		$('#cookie-policy').animate({bottom: -1 * h}, 300, 'easeInOutCirc');
-		$.cookie('cookiepolicy-statistics', valor_statistics, {expires: 365, path: '/'});
-		$.cookie('cookiepolicy-agreed', 'true', {expires: 365, path: '/'});
+      if (!valor_statistics)
+      {
+        $.removeCookie('_ga',  { path: '/' });
+        $.removeCookie('_gat', { path: '/' });
+        $.removeCookie('_gid', { path: '/' });
+      }
 
-		if (!valor_statistics)
-		{
-			$.removeCookie('_ga',  { path: '/' });
-			$.removeCookie('_gat', { path: '/' });
-			$.removeCookie('_gid', { path: '/' });
-		}
+      $('.config-box').animate({
+        opacity: 0
+      }, 300, function(){
+        $('#cookie-config').hide();
+      });
+    })
 
-		$('.config-box').animate({
-			opacity: 0
-		}, 300, function(){
-			$('#cookie-config').hide();
-		});
-	})
+  } catch(err) {
+    console.log(" Cookie policy not found on page (deliberate) ");
+  }
+
+
+
 	/***************** */
 	$('#opensearch').on('click', function (e) {
 		e.preventDefault();
@@ -131,7 +138,7 @@ $(document).ready(function() {
 		$('#top-nav-desktop .image').removeClass("dropdown-open");
 
 		$('#criteria').focus();
-	})	
+	});
 
 
 	

@@ -70,9 +70,20 @@
 
 						<li><a href="<?php echo $dominio ?>politica-privacidad/" title="Política de Privacidad">Política de Privacidad</a></li>
 
+            <?php
+
+            /**
+             * Hide cookies on app version of website
+             */
+
+            if (!APP_ACCESS): 
+            ?>
+
 						<li><a href="<?php echo $dominio ?>politica-cookies/" title="Política de cookies">Política de cookies</a></li>
 
 						<li><a href="#" class="pop_config_cookies" title="Configurar cookies">Configurar cookies</a></li>
+
+            <?php endif; ?>
 
 						<li><a href="<?php echo $dominio . "contacto/"; ?>" title="Configurar cookies">Contacto</a></li>
 
@@ -83,6 +94,15 @@
 		</div>
 	</div>
 </footer>
+
+<?php
+            
+/**
+ * Hide cookies on app version of website
+ */
+
+if (!APP_ACCESS): 
+?>
 
 <div id="cookie-policy" class="cp-notice cp-hidden">
 	<div class="cp-bg">
@@ -163,3 +183,6 @@
 		</div>
 	</div>
 </div>
+<!-- End Cookies Block -->
+
+<?php endif; ?>

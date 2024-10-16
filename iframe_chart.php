@@ -1,4 +1,11 @@
 <?php
+
+/** Is this file a duplicate? Also present in the root directory 
+ * (This is root directory version used on homepage) 
+ * Another version is in the includes directory.
+ **/
+
+
 header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 header("Cache-Control: post-check=0, pre-check=0",false);
@@ -141,10 +148,21 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 
     <title>Denuncias recibidas</title>
 
-	<link href="<?php echo $dominio;?>css/custom.css?<?php echo time();?>" rel="stylesheet" type="text/css">
+ <!-- our project just needs Font Awesome Solid + Brands -->
+ <link href="<?php echo $dominio;?>/css/fa/fontawesome.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/fa/brands.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/fa/solid.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>/css/bs/css/bootstrap.min.css" rel="stylesheet" />
+
+<link href="<?php echo $dominio;?>css/custom.css?v=20240926" rel="stylesheet" type="text/css">
+
+
+
+
 	<script>dominio = "<?php echo $dominio;?>"; </script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-	<script src="<?php echo $dominio;?>/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>	
+
+  <script src="<?php echo $dominio;?>js/jquery-3.6.0.min.js"></script>	
+<script src="<?php echo $dominio;?>css/bs/js/bootstrap.min.js"></script>	
 
 	<script src="<?php echo $dominio;?>js/echarts-en.min.js"></script>
 	
@@ -172,7 +190,7 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 				</select>
 				<div class="bg-red tx-blanco mt-4 p-3 text-center">		
 					<p class="num_denuncias"><?php echo $total_denuncias;?></p>
-					<p>TOTAL <?php echo $tx_periodo;?></p>
+					<p class="tot_denuncias">TOTAL <?php echo $tx_periodo;?></p>
 				</div>
 			</div>
 			<div class="col-md-9 py-4">				
@@ -195,6 +213,22 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 
 
 <script>
+
+/**
+ * Color list is applied in 3 places. 
+ * Use HSL to generate a list of colors with different lightness values.
+ * Base color is hsl(24, 20%, 25%) - #4b3c32
+ **/ 
+
+  var COLOR_LIST = [];
+
+  for (var i = 0; i < 26; i++) {
+    let lumin = 25 + i * 5;
+    if (lumin > 80) lumin = 80;
+    COLOR_LIST.push('hsl(24, 20%, ' + lumin + '%)');
+  }
+
+
 		$(function() {	
 			
 			var option_1 = {		
@@ -223,7 +257,7 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 						itemStyle: {
 							normal: {
 								color: function (params) {
-									var colorList = ['#842B3A', '#924350', '#9F5A66', '#AD727C', '#BA8991', '#C8A1A7', '#D6B8BD', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3'];
+									var colorList = COLOR_LIST;
 									return colorList[params.dataIndex];
 								}
 							}
@@ -261,7 +295,7 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 						itemStyle: {
 							normal: {
 								color: function (params) {
-									var colorList = ['#842B3A', '#924350', '#9F5A66', '#AD727C', '#BA8991', '#C8A1A7', '#D6B8BD', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3'];
+									var colorList = COLOR_LIST;
 									return colorList[params.dataIndex];
 								}
 							}
@@ -296,7 +330,7 @@ $data_denuncias_punto_value = substr($data_denuncias_punto_value, 0, -1);
 						itemStyle: {
 							normal: {
 								color: function (params) {
-									var colorList = ['#842B3A', '#924350', '#9F5A66', '#AD727C', '#BA8991', '#C8A1A7', '#D6B8BD', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3', '#E4D0D3'];
+									var colorList = COLOR_LIST;
 									return colorList[params.dataIndex];
 								}
 							}

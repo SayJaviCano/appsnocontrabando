@@ -277,7 +277,7 @@ if ($rs != "") {
 
 
 
-<!-- Denuncia iFraome Section -->
+<!-- Denuncia iFrame Section -->
 <section class="container">
   <div class="row">
     <div class="col-12">
@@ -285,12 +285,19 @@ if ($rs != "") {
     </div>
   </div>
 </section>
-<!-- Fin Denuncia iFraome Section -->
+<!-- Fin Denuncia iFrame Section -->
 
 
 
 
-<?php
+<?php 
+/**
+ * App no contrabando - dont show app banner
+ * Could really remove this block, this way we can update with copy/paste between 2 sites
+**/
+
+if (!APP_ACCESS):
+
 /**
  * APP BANNER TRIGGER: 
  * Link to show pop/up or links to download app. 
@@ -318,9 +325,7 @@ if ($rs != "") {
     </div>
 </section>
 <!-- Fin Denuncia iFraome Section -->
-
-
-
+<?php endif; ?>
 
 
 <?php include("footer.php"); ?>

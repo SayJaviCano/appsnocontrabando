@@ -49,7 +49,7 @@
       if ($imagen != "") {
         $has_media = true;
 
-        $imagen = '<img src="' . $dominio . $imagen . '" class="img-fluid" alt="' . $titulo . '">';
+        $imagen = '<img src="' . $dominio_web. $imagen . '" class="img-fluid" alt="' . $titulo . '">';
       } elseif ($video != "") {
 
         $pos = strpos($video, "youtube");

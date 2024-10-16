@@ -167,7 +167,7 @@ if ($tags!="") {
                 $imagen_pie = $fila['imagen_pie'];
                 $video = $fila['video'];
 				
-				if ($imagen!="") {  $imagen = '<img src="' . $dominio . $imagen .'" class="img-fluid"  alt="' . $titulo . '">'; }		
+				if ($imagen!="") {  $imagen = '<img src="' . $dominio_web . $imagen .'" class="img-fluid"  alt="' . $titulo . '">'; }		
 				elseif ($video!="")	
 				{  
 					$pos = strpos($video, "youtube");

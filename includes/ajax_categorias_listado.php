@@ -54,7 +54,7 @@ require_once('conexion.php');
 
       if ($imagen != "") {
 
-        $imagen = '<img src="' . $dominio . $imagen .'" class="img-fluid">'; 
+        $imagen = '<img src="' . $dominio_web . $imagen .'" class="img-fluid">'; 
       } elseif ($video!="") {  
 
 				$pos = strpos($video, "youtube");

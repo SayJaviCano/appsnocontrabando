@@ -27,7 +27,7 @@
 						$imagen = $fila['imagen'];	
 						$imagen_pie = $fila['imagen_pie'];	
 						$video = $fila['video'];
-						if ($imagen!="") {  $imagen = '<img src="' . $dominio . $imagen .'" class="img-fluid" alt="' . $titulo . '">'; }		
+						if ($imagen!="") {  $imagen = '<img src="' . $dominio_web . $imagen .'" class="img-fluid" alt="' . $titulo . '">'; }		
 						if ($video!="") {  $imagen = '<iframe src="' . $video. '" allowfullscreen="allowfullscreen" frameborder="0"></iframe>'; }		
 						$slug = $fila["post_name"];
 						$tags = $fila["tags"];

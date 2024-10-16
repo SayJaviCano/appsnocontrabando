@@ -32,10 +32,9 @@ if (DEBUG) {
 
 if (LOCAL) {
 
-  $dominio      = "http://localhost/saysawa/nocontrabando/";
+  $dominio_web  = "http://localhost/saysawa/nocontrabando/";
   $dominio_apps = "http://localhost/saysawa/app-nocontrabando/";
 
-  $dominio_web = $dominio_apps;
   $ruta_real = "/saysawa/app-nocontrabando/";
 
   // DB Connection:
@@ -46,17 +45,8 @@ if (LOCAL) {
 
 } else {
 
-  /* Set base links to APP or Website */
-  $http_host = $_SERVER['HTTP_HOST'];
-
   $dominio_web  = "https://nocontrabando.saysawa.com/";
   $dominio_apps = "https://appsnocontrabando.com/";
-  
-  if ($http_host=="appsnocontrabando.com") {
-    $dominio = $dominio_apps;
-  } else {
-    $dominio = $dominio_web;
-  }
 
   $ruta_real = "";
 
@@ -67,6 +57,17 @@ if (LOCAL) {
   $claveConexion = "24sL+Ss+nn_63";
 
 }
+
+
+// App version switcher for rest of site: 
+if (APP_ACCESS) {
+  $dominio = $dominio_apps;
+} else {
+  $dominio = $dominio_web;
+}
+
+  /* Set base links to APP or Website */
+  $http_host = $_SERVER['HTTP_HOST'];
 
 
 // Mail Configuration and Password SALT: 

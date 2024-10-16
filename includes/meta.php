@@ -191,8 +191,11 @@ elseif ($i == 0)	{
 			$titulo = $fila['titulo'];	
 			$entradilla = $fila['entradilla'];	
 			$texto = $fila['texto'];
-			$texto = str_replace('src="uploads/', 'src="' . $dominio . 'uploads/', $texto);
-			$texto = str_replace('../uploads/', $dominio . 'uploads/', $texto);
+
+      // Replace 3 levels nested to locate images on the main server: 
+			$texto = str_replace('src="uploads/', 'src="' . $dominio_web . 'uploads/', $texto);
+			$texto = str_replace('../uploads/', $dominio_web . 'uploads/', $texto);
+      $texto = str_replace('../../uploads/', $dominio_web . 'uploads/', $texto);
 
 			$imagen = $fila['imagen'];	
 			$imagen_pie = $fila['imagen_pie'];	
@@ -300,8 +303,10 @@ elseif ($i == 1)	{
             $titulo = $fila['titulo'];
             $entradilla = $fila['entradilla'];
             $texto = $fila['texto'];
-            $texto = str_replace('src="uploads/', 'src="' . $dominio . 'uploads/', $texto);
-            $texto = str_replace('../uploads/', $dominio . 'uploads/', $texto);
+
+            $texto = str_replace('src="uploads/', 'src="' . $dominio_web . 'uploads/', $texto);
+            $texto = str_replace('../uploads/', $dominio_web . 'uploads/', $texto);
+            $texto = str_replace('../../uploads/', $dominio_web . 'uploads/', $texto);
                 
             $meta_title = $fila['meta_title'];
             $meta_description = $fila['meta_description'];
@@ -399,7 +404,7 @@ $meta_description = rip_tags($meta_description);
 
 <link href="<?php echo $dominio;?>css/custom.css?v=20240926" rel="stylesheet" type="text/css">
 
-<script>dominio = "<?php echo $dominio;?>"; </script>
+<script>var dominio = "<?php echo $dominio;?>"; </script>
 <script async src="<?php echo $dominio;?>js/analytics.js?<?php echo time();?>"></script>
 
 <script src="<?php echo $dominio;?>js/jquery-3.6.0.min.js"></script>	

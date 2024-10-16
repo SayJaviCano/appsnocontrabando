@@ -1,0 +1,24 @@
+{
+    "gcm_sender_id": "400235843880",
+    "short_name": "NO Contrabando",
+    "name": "Altadis NO Contrabando",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#9f2842",
+    "background_color": "#FFFFFF",
+    "description": "Altadis - Líder en la lucha contra el comercio ilícito de tabaco",
+    "icons": [
+      {
+        "src": "https://appsnocontrabando.com/images/touch-icon-192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "https://appsnocontrabando.com/images/touch-icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "any maskable"
+      }
+    ]
+  }

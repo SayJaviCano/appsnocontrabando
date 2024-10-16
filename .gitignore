@@ -1,11 +1,10 @@
-uploads
-admin/assets
-admin/dist
+uploads/*
+admin/*
 api
-admin/apps_notificaciones_enviar.php
 js/firebase-init.js
-.DS_Store
 
-.vscode/*
 config/config.inc.php
 .htaccess
+
+.DS_Store
+.vscode/*

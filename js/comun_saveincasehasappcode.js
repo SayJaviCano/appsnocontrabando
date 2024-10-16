@@ -1,23 +1,7 @@
 $(document).ready(function() {
 
-	try			{ new WOW().init(); }
-	catch(err)	{ 					}
-	
-	var hash = window.location.hash,
-	cleanhash = hash.replace("#", "");
-
-	if (cleanhash!="") {
-		$.scrollTo("#"+cleanhash, 500, {axis:'y', offset: -115 } );
-	}	  
-	$(".go_to").click(function(e) {
-		e.preventDefault();
-		var sec = $(this).attr('data-seccion');
-		$.scrollTo("#"+sec, 500, {axis:'y', offset: -180 } );
-		return false;
-	});		  
-
-
 	try {
+		// cookiepolicy // 
 		var k = 'cookiepolicy-agreed',
 		v = 'true',
 		p = $('#cookie-policy'),
@@ -39,41 +23,57 @@ $(document).ready(function() {
 		
 	  }
 
+	$('.share').on('click', function(){	
+		url = $(this).attr("href");
+		window.open(url,'ventanacompartir', 'toolbar=0, status=0, width=650, height=450');
+		return false;
+	}); 
+
+	$('.navbar-toggle').on('click', function(){
+		if ($(this).hasClass("wsactive"))		{
+			//$(".menu").css('height', 'auto');	
+			$(".menu").css('left', '-100%');				
+			$("body").css('overflow-y', 'scroll');
+			$(this).removeClass("wsactive");
+		} else {
+			//$(".menu").css('height', '100%');		
+			$(".menu").css('left', '0px');		
+			$("body").css('overflow-y', 'hidden');
+			$(this).addClass("wsactive");
+		}
+	});
+
+	$('.dropdown .nav-link').on('click', function(){
+		if ($(this).hasClass("dactive"))		{
+			$("#wsnavtoggle").show();
+			$(".navbar-back").hide();
+			$(this).removeClass("dactive");
+		} else {
+			$("#wsnavtoggle").hide();
+			$(".navbar-back").show();
+			$(this).addClass("dactive");
+		}
+	});
+
+	$('.navbar-back').on('click', function(){
+		$("#wsnavtoggle").show();
+		$(".navbar-back").hide();
+		$(".dropdown-menu").removeClass("show");	
+		$('.dropdown .nav-link').removeClass("dactive");	
+	});
+
+	
+
 	function toggleIcon(e) {
 		$(e.target)
 			.prev('.panel-heading')
-			.find(".more-less")			
-			.toggleClass('fa-chevron-down fa-chevron-up');
+			.find(".more-less")
+			.toggleClass('bi-chevron-compact-down bi-chevron-compact-up');
 	}
 	
-
 	$('.panel-group').on('hidden.bs.collapse', toggleIcon);
 	$('.panel-group').on('shown.bs.collapse', toggleIcon);	
 
-	$('.disabled').on('click', function (e) {
-		e.preventDefault();		
-		return false;
-	})
-
-	$('.volver').on('click', function (e) {
-		e.preventDefault();		
-		history.back();
-		return false;
-	})
-
-	$('.__bscarousel-pagetitle').on('click', function (e) {
-		e.preventDefault();		
-		index = $(this).find(".__bscarousel-pageindex").html();
-		url = $("#button-"+index).attr('href');
-		location.href = url;
-		return false;
-	})
-
-
-	
-
-	
-	
 	$('.pop_config_cookies').on('click', function (e) {
 		e.preventDefault();		
 		$('.config-box').animate({
@@ -122,160 +122,10 @@ $(document).ready(function() {
 		});
 	})
 	/***************** */
-	$('#opensearch').on('click', function (e) {
-		e.preventDefault();
-		$('#desktop-nav').removeClass('open');
-		$('.searchfield').addClass('open');
-
-		$('.desktop-media').removeClass("dropdown-open");
-		$('#top-nav-desktop .image').removeClass("dropdown-open");
-
-		$('#criteria').focus();
-	})	
-
-
 	
-	$('.desktop-media .btn').on('click', function (e) {
-		e.preventDefault();
-		$('#desktop-nav').removeClass('open');
-		$('.searchfield').removeClass('open');
-		$('.desktop-media').toggleClass("dropdown-open");
-		$('#top-nav-desktop .image').toggleClass("dropdown-open");
-
-	})		
-
-	$('#desktop-nav').on('mouseenter', function (e) {
-		e.preventDefault();
-		if ($('#desktop-nav').hasClass('scrolling'))
-		{
-			$('#desktop-nav').removeClass('scrolling');
-		} 	
-	})	
-
-  //  Desktop: 
-	$('#hamburger-button').on('click', function (e) {
-		e.preventDefault();
-		$('.desktop-media').removeClass("dropdown-open");
-		$('#top-nav-desktop .image').removeClass("dropdown-open");		
-
-		if ($("#desktop-nav").hasClass("open"))
-		{
-			$('#desktop-nav').removeClass('open');
-		} else { 
-			$('#desktop-nav').addClass('open');
-		}
-	});
-
-  // Also open on section and reclamacion: 
-  $('.dropdown-toggle').on('click', function (e) {
-		e.preventDefault();
-		$('.desktop-media').removeClass("dropdown-open");
-		$('#top-nav-desktop .image').removeClass("dropdown-open");		
-
-		if ($("#desktop-nav").hasClass("open"))
-		{
-			$('#desktop-nav').removeClass('open');
-		} else { 
-			$('#desktop-nav').addClass('open');
-		}
-	});
-
-
-
-  // Mobile: 
-	$('.mobile-menu-button').on('click', function (e) {
-		e.preventDefault();
-		
-    $('#mobile-nav').removeClass('open-search');
-		
-		if ($("#mobile-nav").hasClass("open"))
-		{
-			$('body').removeClass('lock');
-			$('#mobile-nav').removeClass('open');
-			$('ul').removeClass('opened');
-
-      $("#mobile_footer_nav > div:nth-child(1)").css('transform','translateY(0)');
-      $("#mobile_footer_nav > div:nth-child(2)").css('transform','translateY(0)');
-      $("#mobile_footer_nav > div:nth-child(3) i:nth-child(2)").css('display','none');
-      $("#mobile_footer_nav > div:nth-child(3) i:nth-child(1)").css('display','block');
-
-		} else { 
-			$('body').addClass('lock');
-			$('#mobile-nav').addClass('open');
-
-      $("#mobile_footer_nav > div:nth-child(1)").css('transform','translateY(-1000px)');
-      $("#mobile_footer_nav > div:nth-child(2)").css('transform','translateY(-1000px)');
-      $("#mobile_footer_nav > div:nth-child(3) i:nth-child(2)").css('display','block');
-      $("#mobile_footer_nav > div:nth-child(3) i:nth-child(1)").css('display','none');
-		}
-
-
-	});
-
-
-
-
-	$('.openSubMenu').on('click', function (e) {
-		e.preventDefault();
-		$(this).prev().addClass('opened');
-	})		
-
-	$('.backToPrevious').on('click', function (e) {
-		e.preventDefault();
-		$('ul').removeClass('opened');
-	})	
-
-	$('#opensearch-mobile').on('click', function (e) {
-		e.preventDefault();
-		$('ul').removeClass('opened');
-		if ($("#mobile-nav").hasClass('open-search'))
-		{
-			$('#mobile-nav').removeClass('open-search');
-		} else {
-			$('#mobile-nav').removeClass('open').addClass('open-search');
-		}		
-	})		
-		
-	$('.load-more').on('click', function (e) {
-		e.preventDefault();
-		var pagina = parseInt($(this).attr('data-pagina'));
-		var pagina_mas = pagina;
-		var total_paginas = $(this).attr('data-total-paginas');
-
-		if (pagina >= total_paginas) {
-			$(this).hide();
-		} else {
-			pagina_mas = (pagina+1);
-		}
-		carga_pagina (pagina, pagina_mas) 
-
-		return false;
-	})	
 
 });
 
-function carga_pagina (pagina, pagina_mas) {
-	jQuery.ajax({
-		type: 'POST',
-		url: dominio + "ajax/ajax_noticias.php",
-		data: {
-			pagina: pagina,
-		},
-		success: function (data, textStatus, jqXHR) {					
-			//console.log(data);
-			if (textStatus == 'success') {					
-				$(".noticias").append(data);
-				$('.load-more').attr('data-pagina', pagina_mas);
-				$.scrollTo(".pagina_"+pagina, 500, {axis:'y', offset: -80 } );
-			} 
-			return false;
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error:" + textStatus)
-			return false;
-		}
-	});	
-}
 
 $(window).on('resize', function(){
 	p = $('#cookie-policy'),
@@ -283,16 +133,19 @@ $(window).on('resize', function(){
 	p.css('bottom', -1 * h).removeClass('cp-hidden');
 });
 
-$(window).scroll(function() {
-	var scrollTop = $(window).scrollTop();
-	$('#desktop-nav').removeClass('open');
-	
-	if (scrollTop > 1 ) { 
-		$('#desktop-nav').addClass('scrolling');
-	} else { 
-		$('#desktop-nav').removeClass('scrolling');
-	}
-});
+
+function checkvalidate(checks) {
+	 var selected = ''; 
+	$(checks +' input[type=checkbox]').each(function(){
+		if (this.checked) {
+			selected += $(this).val()+', ';
+		}
+	}); 
+    if (selected != '') 
+		return true;
+	else
+	    return false;
+}
 
 function no_XSS (valor) {
 	valor = replace(valor,"javascript","")
@@ -362,15 +215,10 @@ function solo_letras_numeros(e) {
 function validarFecha(Cadena){   
     var Fecha= new String(Cadena);  
     var RealFecha= new Date();  
-	/*
     var Ano= new String(Fecha.substring(Fecha.lastIndexOf("/")+1,Fecha.length))   
     var Mes= new String(Fecha.substring(Fecha.indexOf("/")+1,Fecha.lastIndexOf("/")))   
     var Dia= new String(Fecha.substring(0,Fecha.indexOf("/")))   
-  	*/
-	var Ano = new String(Fecha.substring(0,Fecha.indexOf("-")))  
-	var Mes = new String(Fecha.substring(Fecha.indexOf("-")+1,Fecha.lastIndexOf("-")))   
-	var Dia = new String(Fecha.substring(Fecha.lastIndexOf("-")+1,Fecha.length))   
-
+  
     if (isNaN(Ano) || Ano.length<4 || parseFloat(Ano)<1900){   
         //alert('El formato de Año es incorrecto')   
         return false   
@@ -490,13 +338,15 @@ function tiene_mayusculas(texto){
    return 0;
 } 
 function seguridad_clave(clave){
+
 	/*
 	Tiene letras y números: +30%
 	Tiene mayúsculas y minúsculas: +30%
 	Tiene entre 4 y 5 caracteres: +10%
-	Tiene entre 6 y 10 caracteres: +30%
-	Tiene más de 10 caracteres: +40% 
+	Tiene entre 6 y 8 caracteres: +30%
+	Tiene más de 8 caracteres: +40% 
 	*/
+
 	var seguridad = 0;
 	if (clave.length!=0){
 		if (tiene_numeros(clave) && tiene_letras(clave)){
@@ -508,10 +358,10 @@ function seguridad_clave(clave){
 		if (clave.length >= 4 && clave.length <= 5){
 			seguridad += 10;
 		}else{
-			if (clave.length >= 6 && clave.length <= 10){
+			if (clave.length >= 6 && clave.length <= 8){
 				seguridad += 30;
-			} else { 
-				if (clave.length > 10){
+			}else{
+				if (clave.length > 8){
 					seguridad += 40;
 				}
 			}

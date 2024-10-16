@@ -23,6 +23,10 @@ function ajax() {
   }
    
 	function response() {
+
+      console.log(connection.response);
+      console.log(connection.responseText);
+
 		if(connection.readyState == 4) {
 			//alert(connection.responseText);
 		}

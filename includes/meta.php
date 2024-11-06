@@ -204,8 +204,8 @@ elseif ($i == 0)	{
 
 			
 			if ($imagen!="")	{  
-				$meta_image =  $dominio . $imagen;
-				$imagen = '<img src="' . $dominio . $imagen .'" class="img-fluid">';
+				$meta_image =  $dominio_web . $imagen;
+				$imagen = '<img src="' . $dominio_web . $imagen .'" class="img-fluid">';
 				$destacado_img = $fila['destacado_img'];
 				
         if ($destacado_img=="1" && "why"=="who knows") { $imagen = ""; }

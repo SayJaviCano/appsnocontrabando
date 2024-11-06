@@ -5,6 +5,23 @@ session_start();
 $path_relative="../";
 include('../includes/conexion.php');
 
+// Try and Output Raw Data when Testing: 
+if ( isset($_SERVER["REMOTE_ADDR"]) && 1==1
+  && $_SERVER["REMOTE_ADDR"]=="89.131.190.85") {
+
+  $tmp_data = file_get_contents('php://input');
+
+  $file_tmp = fopen('_tmp/vars.txt', 'a');
+  fwrite($file_tmp, "------------------------------------\n");
+  fwrite($file_tmp, date("Y-m-d H:i:s") . "\n");
+  fwrite($file_tmp, $_SERVER["REMOTE_ADDR"] . "\n");
+  fwrite($file_tmp, $_SERVER["REQUEST_URI"] . "\n");
+  fwrite($file_tmp, json_encode($_POST) . "\n");
+  fwrite($file_tmp, json_encode($_GET) . "\n");
+  fwrite($file_tmp, json_encode($tmp_data) . "\n");
+  fclose( $file_tmp );
+
+}
 
 $request = ($_SERVER['REQUEST_URI']);
 $tmp = array_filter(explode('?',  $request));
@@ -601,6 +618,7 @@ class Browser
      * Returns a formatted string with a summary of the details of the browser.
      * @return string formatted string with a summary of the browser
      */
+    /*
     public function __toString()
     {
         return "<strong>Browser Name:</strong> {$this->getBrowser()}<br/>\n" .
@@ -608,6 +626,7 @@ class Browser
             "<strong>Browser User Agent String:</strong> {$this->getUserAgent()}<br/>\n" .
             "<strong>Platform:</strong> {$this->getPlatform()}<br/>";
     }
+    */
 
     /**
      * Protected routine to calculate and determine what the browser is in use (including platform)

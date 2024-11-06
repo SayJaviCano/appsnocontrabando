@@ -6,7 +6,7 @@ $path_relative="../";
 include('../includes/conexion.php');
 
 // Try and Output Raw Data when Testing: 
-if ( isset($_SERVER["REMOTE_ADDR"]) && 1==1
+if ( isset($_SERVER["REMOTE_ADDR"]) && 1==2
   && $_SERVER["REMOTE_ADDR"]=="89.131.190.85") {
 
   $tmp_data = file_get_contents('php://input');
@@ -73,6 +73,9 @@ if (is_array($arr_url) ) {
 }
 
 
+
+// 2024-10: Code update for $version variable: 
+
 if ($page_name=="dispositivo" && $i==1) {
 	//https://appsnocontrabando.com/api/dispositivo/
 
@@ -83,24 +86,33 @@ if ($page_name=="dispositivo" && $i==1) {
         $tipo = LimpiaParametros((isset($_POST['tipo']) ? $_POST['tipo'] : 0));	//	1=IOS, 2=ANDROID, 3=WEB
         $dispositivo = LimpiaParametros((isset($_POST['dispositivo']) ? $_POST['dispositivo'] :""));
         $plataforma = LimpiaParametros((isset($_POST['plataforma']) ? $_POST['plataforma'] : ""));
+
+        $version = LimpiaParametros((isset($_POST['version']) ? $_POST['version'] : ""));
+
     } else {
         $json = file_get_contents('php://input');
         $obj = json_decode($json, true);	
         $token = $obj['token'];
         $tipo = $obj['tipo'];
         $dispositivo = $obj['dispositivo'];
-        $plataforma = $obj['plataforma'];          
+        $plataforma = $obj['plataforma'];
+
+        $version = ( isset($obj['version']) ) ? $obj['version'] : "";
+
     }
+
     $dispositivo = ucfirst($dispositivo);
     $plataforma = ucfirst($plataforma);
 	
   	
 	if (!is_numeric($tipo)) { $tipo = 0; }
+  if (!isset($version)) { $version=""; }
 
     $ip = $_SERVER['REMOTE_ADDR'];
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
-    $navegador = "";   $version = "";
 
+    $navegador = "";
+    
 	if ($token!="" && $tipo!=0)
 	{
         $fecha = date("Y-m-d H:i:s");
@@ -122,14 +134,30 @@ if ($page_name=="dispositivo" && $i==1) {
 		$sql = "SELECT * FROM app_dispositivos WHERE token='$token' AND tipo=$tipo"; 
 		$rs = $mysqli->query($sql); 
 		if ($rs->num_rows > 0) {		
+
 			$fila = $rs->fetch_assoc();
+
 			$id_dispositivo = $fila['id'];
-			$sql2 = "Update app_dispositivos SET fecha_ult_conexion='$fecha', dispositivo='$dispositivo', plataforma='$plataforma', ip='$ip' WHERE id=" . $id_dispositivo;
+
+			$sql2 = "UPDATE app_dispositivos 
+               SET fecha_ult_conexion='$fecha', dispositivo='$dispositivo', plataforma='$plataforma', 
+               ip='$ip', navegador='$navegador', version='$version'
+               WHERE id=" . $id_dispositivo;
+
 			$rs2 = $mysqli->query($sql2); 
+
 		} else {
-			$sql2 = "INSERT INTO app_dispositivos (token, tipo, fecha_alta, fecha_ult_conexion, ip, navegador, version, plataforma, dispositivo) VALUES ('$token', '$tipo', '$fecha', '$fecha', '$ip', '$navegador', '$version', '$plataforma', '$dispositivo')";     
+
+			$sql2 = "INSERT INTO app_dispositivos 
+                (token, tipo, fecha_alta, fecha_ult_conexion, 
+                ip, navegador, version, plataforma, dispositivo
+                ) VALUES (
+                '$token', '$tipo', '$fecha', '$fecha', 
+                '$ip', '$navegador', '$version', '$plataforma', '$dispositivo')";
+
 			$rs2 = $mysqli->query($sql2); 
 			$id_dispositivo = $mysqli->insert_id;
+
 		}
 	}
 	

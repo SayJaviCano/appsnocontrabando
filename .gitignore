@@ -1,10 +1,12 @@
 uploads/*
 admin/*
-api
 js/firebase-init.js
 
 config/config.inc.php
 .htaccess
+api/htaccess
 
 .DS_Store
 .vscode/*
+
+api/_tmp/*

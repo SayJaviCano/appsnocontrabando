@@ -2,5 +2,5 @@ User-agent: *
 Disallow: /admin/
 Disallow: /api/
 Disallow: /includes/
-Disallow: https://nocontrabando.altadis.com/includes/ajax_combo_provincia.php
-Sitemap: https://nocontrabando.altadis.com/sitemap.xml
+Disallow: https://nocontrabando.com/includes/ajax_combo_provincia.php
+Sitemap: https://nocontrabando.com/sitemap.xml

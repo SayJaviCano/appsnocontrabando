@@ -51,7 +51,7 @@ if ($_POST['verificacion'] != ""){
     $tx .= "<p style='font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#757575;'><b>Teléfono</b>: $telefono</p>";
     $tx .= "<p style='font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#757575;'><b>País</b>: $country</p>";		
 		$tx .= "<p style='font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#757575;'><b>Consulta</b>:<br>$consulta</p><br><br>";		
-		$tx .= '<p><a href="https://nocontrabando.altadis.com/" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#757575;"><b>NOcontrabando.altadis.com</b></a></p>';	
+		$tx .= '<p><a href="https://nocontrabando.com/" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#757575;"><b>nocontrabando.com</b></a></p>';	
 
 		$texto_plano = trim($texto_mail);
 		$texto_plano = strip_tags($texto_plano);				

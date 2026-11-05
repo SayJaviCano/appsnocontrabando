@@ -45,7 +45,7 @@ if (LOCAL) {
 
 } else {
 
-  $dominio_web  = "https://nocontrabando.saysawa.com/";
+  $dominio_web  = "https://nocontrabando.com/";
   $dominio_apps = "https://appsnocontrabando.com/";
 
   $ruta_real = "";

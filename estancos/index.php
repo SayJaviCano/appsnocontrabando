@@ -266,7 +266,7 @@ if( isset($_GET['qr']) )
 
 			if ($dispositivo=="Escritorio") {
 
-				$url_app = "https://nocontrabando.altadis.com/?pop=appNoContrabando";
+				$url_app = "https://nocontrabando.com/?pop=appNoContrabando";
 
 			} else {
 

@@ -355,7 +355,7 @@ $apple_touch_icon = "apple-touch-icon.png";
 if( stripos( $user_agent, 'Android' ) !== false ) $apple_touch_icon = "android-touch-icon.png";
 
 $pagina_nocontrabando = $pagina_actual;
-$pagina_nocontrabando = str_replace ("appsnocontrabando.com", "nocontrabando.altadis.com", $pagina_nocontrabando);
+$pagina_nocontrabando = str_replace ("appsnocontrabando.com", "nocontrabando.com", $pagina_nocontrabando);
 
 $meta_description = rip_tags($meta_description);
 
@@ -379,7 +379,7 @@ $meta_description = rip_tags($meta_description);
 	<meta property="og:url" content="<?php echo $pagina_actual;?>" />
 	<meta property="og:site_name" content="Altadis NO Contrabando" />
 	<meta property="og:image" content="<?php echo $meta_image;?>" />
-	<script type='application/ld+json'>{"@context":"https:\/\/schema.org","@type":"WebSite","url":"https:\/\/nocontrabando.altadis.com\/","name":"Altadis NO Contrabando","potentialAction":{"@type":"SearchAction","target":"https:\/\/nocontrabando.altadis.com\/?s={search_term}","query-input":"required name=search_term"}}</script>
+	<script type='application/ld+json'>{"@context":"https:\/\/schema.org","@type":"WebSite","url":"<?php echo rtrim($dominio_web, '/'); ?>\/","name":"Altadis NO Contrabando","potentialAction":{"@type":"SearchAction","target":"<?php echo rtrim($dominio_web, '/'); ?>\/?s={search_term}","query-input":"required name=search_term"}}</script>
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="<?php echo $meta_title;?>">
@@ -423,7 +423,7 @@ $meta_description = rip_tags($meta_description);
 	$cookie_statistics = "";
 	if(isset($_COOKIE['cookiepolicy-statistics'])) {	$cookie_statistics = $_COOKIE['cookiepolicy-statistics']; }
 
-	if ($_SERVER['SERVER_NAME'] == "nocontrabando.altadis.com") {
+	if ($_SERVER['SERVER_NAME'] == "nocontrabando.com" || $_SERVER['SERVER_NAME'] == "nocontrabando.altadis.com") {
     	if ($cookie_statistics=="true") {
             ?>
 			<script>

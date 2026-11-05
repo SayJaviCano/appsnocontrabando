@@ -77,7 +77,7 @@
 	</div>
 
 
-<?php if ($_SERVER['SERVER_NAME'] == "nocontrabando.altadis.com" && $page_name=="buzon-de-denuncias") {  ?>
+<?php if (($_SERVER['SERVER_NAME'] == "nocontrabando.com" || $_SERVER['SERVER_NAME'] == "nocontrabando.altadis.com") && $page_name=="buzon-de-denuncias") {  ?>
 	<hr class="clearfix">
 	<div class="row mb-5">	
 		<div class="col-md-10 mx-auto">	

@@ -20,7 +20,7 @@ include('includes/conexion.php');
 /*
 $http_host = $_SERVER['HTTP_HOST'];
 if ($http_host=="appsnocontrabando.com") {
-   // if ($es_movil==false)	{  header('Location: https://nocontrabando.altadis.com', true, 301); die(); }       
+   // if ($es_movil==false)	{  header('Location: https://nocontrabando.com', true, 301); die(); }       
 }
 */
 

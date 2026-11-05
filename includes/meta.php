@@ -11,8 +11,9 @@ if (!is_numeric($p)) { $p = 0; }
 $request = ($_SERVER['REQUEST_URI']);
 
 // nginx reescribe a /index.php y pierde la ruta amigable; recuperarla
-if (!empty($_GET['__path'])) {
-	$request = '/' . ltrim((string) $_GET['__path'], '/');
+if (isset($_GET['__path'])) {
+	$path = ltrim((string) $_GET['__path'], '/');
+	$request = ($path === '') ? '/' : '/' . $path;
 } elseif (!empty($_SERVER['HTTP_X_ORIGINAL_URI'])) {
 	$path_only = parse_url($request, PHP_URL_PATH);
 	if ($path_only === '/index.php' || substr((string) $path_only, -10) === '/index.php') {
@@ -76,6 +77,13 @@ if (isset($arr_url)) {
         $i = count($arr_url)-1;
         $page_name = (isset($arr_url[$i]) ? $arr_url[$i] : "");
     }
+}
+
+// Home: nginx puede mandar /index.php o __path vacío
+if ($page_name === "index.php" || $page_name === "index") {
+	$i = -1;
+	$page_name = "";
+	$arr_url = null;
 }
 
 $action = LimpiaParametros((isset($_GET['c']) ? $_GET['c'] :""));
@@ -408,10 +416,10 @@ $meta_description = rip_tags($meta_description);
 	<link rel="manifest" href="<?php echo $dominio; ?>manifest.json" crossorigin="use-credentials">
 
  <!-- our project just needs Font Awesome Solid + Brands -->
-<link href="<?php echo $dominio;?>/css/fa/fontawesome.css" rel="stylesheet" />
-<link href="<?php echo $dominio;?>/css/fa/brands.css" rel="stylesheet" />
-<link href="<?php echo $dominio;?>/css/fa/solid.css" rel="stylesheet" />
-<link href="<?php echo $dominio;?>/css/bs/css/bootstrap.min.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>css/fa/fontawesome.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>css/fa/brands.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>css/fa/solid.css" rel="stylesheet" />
+<link href="<?php echo $dominio;?>css/bs/css/bootstrap.min.css" rel="stylesheet" />
 
 <link href="<?php echo $dominio;?>css/custom.css?v=20240926" rel="stylesheet" type="text/css">
 

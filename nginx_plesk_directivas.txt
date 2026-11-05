@@ -1,8 +1,16 @@
-# IMPORTANTE: pegar SOLO en "Directivas adicionales de nginx"
-# (NO en las de Apache)
-#
-# Sustituye el bloque anterior por este (pasa la ruta a PHP):
+# Pegar SOLO en "Directivas adicionales de nginx"
+# Sustituye el bloque anterior completo.
 
-if (!-e $request_filename) {
+set $seourl 1;
+if ($uri = /) {
+    set $seourl 0;
+}
+if ($uri ~* \.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|otf|webp|map|txt|xml|json)$) {
+    set $seourl 0;
+}
+if (-f $request_filename) {
+    set $seourl 0;
+}
+if ($seourl = 1) {
     rewrite ^/(.*)$ /index.php?__path=$1 last;
 }

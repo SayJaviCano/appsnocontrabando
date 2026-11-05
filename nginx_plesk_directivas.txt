@@ -1,0 +1,8 @@
+# IMPORTANTE: pegar SOLO en "Directivas adicionales de nginx"
+# (NO en las de Apache)
+#
+# Sustituye el bloque anterior por este (pasa la ruta a PHP):
+
+if (!-e $request_filename) {
+    rewrite ^/(.*)$ /index.php?__path=$1 last;
+}

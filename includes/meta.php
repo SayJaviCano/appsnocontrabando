@@ -9,9 +9,20 @@ $p = LimpiaParametros(isset($_GET['p']) ? $_GET['p'] :0);
 if (!is_numeric($p)) { $p = 0; }
 
 $request = ($_SERVER['REQUEST_URI']);
+
+// nginx reescribe a /index.php y pierde la ruta amigable; recuperarla
+if (!empty($_GET['__path'])) {
+	$request = '/' . ltrim((string) $_GET['__path'], '/');
+} elseif (!empty($_SERVER['HTTP_X_ORIGINAL_URI'])) {
+	$path_only = parse_url($request, PHP_URL_PATH);
+	if ($path_only === '/index.php' || substr((string) $path_only, -10) === '/index.php') {
+		$request = $_SERVER['HTTP_X_ORIGINAL_URI'];
+	}
+}
+
 $pagina_actual = "https://";
 if (!isset($_SERVER['HTTPS'])) { $pagina_actual = "http://"; } 
-$pagina_actual .=  $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$pagina_actual .=  $_SERVER['HTTP_HOST'] . (strpos($request, '?') !== false ? strstr($request, '?', true) : $request);
 
 $tmp = array_filter(explode('?',  $request));
 $tmp[0] = str_replace($ruta_real, "", $tmp[0]);

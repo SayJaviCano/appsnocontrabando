@@ -1,0 +1,76 @@
+# .htaccess PRODUCCIÓN — appsnocontrabando.com
+# Copiar a la raíz del vhost como .htaccess
+
+#Desactivar la navegación por directorios
+# Options All -Indexes - blocked on plesk.
+
+#Desactivar la firma del servidor
+ServerSignature Off
+
+#BEGIN Seguridad contra hacking e Injections
+RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
+
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
+
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
+
+RewriteRule ^(.*)$ index.php [F,L]
+#END Seguridad contra hacking e Injections
+
+
+# BROWSER CACHING USING EXPIRES HEADERS
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/mpeg "access plus 1 year"
+
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
+
+# BROWSER CACHING USING CACHE-CONTROL HEADERS
+<ifModule mod_headers.c>
+    <filesMatch ".(flv|gif|ico|jpg|jpeg|mp4|mpeg|png|svg|swf|webp)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </filesMatch>
+
+    <filesMatch ".(js|pdf)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </filesMatch>
+
+    <filesMatch ".(css)$">
+        Header set Cache-Control "max-age=604800, public"
+    </filesMatch>
+</ifModule>
+
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Barra final solo en URLs de contenido (no en ficheros con extensión)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,5}$
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ https://appsnocontrabando.com/$1/ [R=301,L]
+
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+</IfModule>

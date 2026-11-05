@@ -116,7 +116,7 @@ if ($rs != "") {
         <!-- image 1/2 width if present -->
         <?php if ($has_media) { ?>
           <div>
-            <a href="<?php echo "$dominio" . $slug . "/"; ?>" title="<?php echo $titulo; ?>">
+            <a href="<?php echo "$dominio_web" . $slug . "/"; ?>" title="<?php echo $titulo; ?>">
               <div class="caja n2">
                 <div class="box">
                   <?php echo $imagen; ?>
@@ -143,7 +143,7 @@ if ($rs != "") {
             while ($fila2 = $rs2->fetch_array(MYSQLI_ASSOC)) {
               $categoria_name = $fila2["nombre"];
               $categoria_slug = $fila2["slug"];
-          ?><a href="<?php echo $dominio . "category/$categoria_slug/"; ?>"><?php echo $categoria_name; ?></a>
+          ?><a href="<?php echo $dominio_web . "category/$categoria_slug/"; ?>"><?php echo $categoria_name; ?></a>
           <?php
               if ($contador_sub < $rs2->num_rows) {
                 echo " | ";
@@ -155,10 +155,10 @@ if ($rs != "") {
             echo " | " . $fecha . "</p>";
           }
           ?>
-          <h2><a href="<?php echo $dominio . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="tit2"><?php echo $titulo; ?></a></h2>
+          <h2><a href="<?php echo $dominio_web . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="tit2"><?php echo $titulo; ?></a></h2>
           <?php echo $entradilla; ?>
 
-          <a href="<?php echo $dominio . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="arrow-link">Seguir Leyendo</a>
+          <a href="<?php echo $dominio_web . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="arrow-link">Seguir Leyendo</a>
         </div>
       </div>
     </div>
@@ -256,7 +256,7 @@ if (!APP_ACCESS):
               while ($fila2 = $rs2->fetch_array(MYSQLI_ASSOC)) {
                 $categoria_name = $fila2["nombre"];
                 $categoria_slug = $fila2["slug"];
-            ?><a href="<?php echo $dominio . "category/$categoria_slug/"; ?>"><?php echo $categoria_name; ?></a>
+            ?><a href="<?php echo $dominio_web . "category/$categoria_slug/"; ?>"><?php echo $categoria_name; ?></a>
             <?php
                 if ($contador_slug < $rs2->num_rows) {
                   echo " | ";
@@ -266,9 +266,9 @@ if (!APP_ACCESS):
               echo " | " . $fecha . "</p>";
             }
             ?>
-            <h3><a href="<?php echo "$dominio" . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="titular_3"><?php echo $titulo; ?></a></h3>
+            <h3><a href="<?php echo "$dominio_web" . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="titular_3"><?php echo $titulo; ?></a></h3>
             <p>
-              <a href="<?php echo "$dominio" . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="arrow-link">Seguir Leyendo</a>
+              <a href="<?php echo "$dominio_web" . $slug . "/"; ?>" title="<?php echo $titulo; ?>" class="arrow-link">Seguir Leyendo</a>
             </p>
 
           </div>

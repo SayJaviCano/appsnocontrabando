@@ -1,0 +1,75 @@
+<?php
+
+define("LOCAL", false);
+define("DEBUG", false);  // poner true temporalmente para ver errores en pantalla
+define("APP_ACCESS", true); // true = versión APP (oculta banners/cookies de la web)
+
+if (DEBUG) {
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+} else {
+  error_reporting(E_ERROR | E_PARSE);
+}
+
+if (LOCAL) {
+
+  $dominio = "http://localhost/saysawa/nocontrabando/";
+  $dominio_apps = "https://appsnocontrabando.com/";
+  $dominio_web = $dominio;
+  $host_web = "localhost";
+  $ruta_real = "/saysawa/nocontrabando/";
+
+  $maquinaConexion = "127.0.0.1";
+  $usuarioConexion = "root";
+  $claveConexion = "hogfather";
+  $DB = "saysawa_nocontrabando";
+
+} else {
+
+  $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'nocontrabando.com';
+  $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+
+  $dominio_web = "https://nocontrabando.com/";
+  $host_web = "nocontrabando.com";
+
+  if ($http_host == "appsnocontrabando.com") {
+    $dominio = "https://appsnocontrabando.com/";
+  } else {
+    $dominio = $protocol . '://' . $http_host . '/';
+  }
+
+  $dominio_apps = "https://appsnocontrabando.com/";
+  $ruta_real = "";
+
+  $maquinaConexion = "localhost";
+  $DB = "nocontrabando_2024";
+  $usuarioConexion = "nocontra_db_2024";
+  $claveConexion = "24sL+Ss+nn_63";
+
+}
+
+// Valores por defecto por si falta alguna variable
+if (!isset($dominio) || $dominio === '') {
+  $dominio = $dominio_web;
+}
+if (!isset($host_web) || $host_web === '') {
+  $host_web = 'nocontrabando.com';
+}
+
+// Mail
+if (!defined('MAIL_TO_NAME')) {
+  define('MAIL_TO_NAME', 'Imperial Brands');
+}
+if (!defined('MAIL_TO_EMAIL')) {
+  define('MAIL_TO_EMAIL', 'jc@saysawa.com');
+}
+
+$mail_host     = "smtp.acens.com";
+$mail_username = "clientes.saysawa.com";
+$mail_password = "Clientes2015";
+
+$de       = "ilicito@es.imptob.com";
+$deNombre = "No Contrabando";
+
+$TAMANO_PAGINA = 10;
+$clave_crip    = "KEY-NOContrabando#04|21";
